@@ -21,12 +21,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/')
-@app.route('/index')
-@login_required
-def index():
-    return render_template('index.html', title = "Home")
-
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -57,7 +51,6 @@ def logout():
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
-    print("HELLO")
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegForm()
@@ -98,13 +91,16 @@ def upload():
                                     lang=lang)
     elif request.method == 'GET':
         return render_template('upload.html', title='Upload')
-
+@app.route('/')
+@app.route('/index')
+@login_required
+def index():
+	return render_template('index.html', images=Posts.query.all(), title='Home')
 @app.route('/save_image', methods=['POST'])
 @login_required
 def save_image():
 	img = Posts(image_file=request.form['image_path'], body=request.form['txtArea'])
 	db.session.add(img)
 	db.session.commit()
-
 	# print(Image.query.all())
-	return render_template('index.html', images=Posts.query.all(), title='Home')
+	return redirect(url_for('index'))

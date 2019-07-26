@@ -3,22 +3,24 @@
 {% block content %}
 
     <h1>Hi, {{ current_user.username }}</h1>
-    {% for image in images %}
-    <div style="border-style:solid">
-        <div class="row">
-            <div class="col-4">
-                    <img src="{{image.image_file}}" style="max-width: 400px">
-                </div>
-                <div class="col-4" style="border-right-style: solid; border-left-style:solid">
-                    {{ image.body }}
-                    {% for text in image.body.split('<br>') %}
-                        <p> {{text}} </p>
-                    {% endfor%}
-                    </div>
+    {% if images %}
+        {% for image in images %}
+        <div style="border-style:solid">
+            <div class="row">
                 <div class="col-4">
-                    {{image.timestamp}}
+                        <img src="{{image.image_file}}" style="max-width: 400px">
+                    </div>
+                    <div class="col-4" style="border-right-style: solid; border-left-style:solid">
+                        {% for text in image.body.split('<br>') %}
+                            <p> {{text}} </p>
+                        {% endfor%}
+                        </div>
+                    <div class="col-4">
+                        {{image.timestamp}}
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
+    
 {% endblock %}
