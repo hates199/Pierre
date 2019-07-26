@@ -1,26 +1,31 @@
-from app import app
+from app import app, db
 from flask import render_template, url_for, flash, redirect, request
 from app.forms import LoginForm, RegForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Posts
 from werkzeug.urls import url_parse
+import os
+from os.path import join, dirname, realpath
+from werkzeug.utils import secure_filename
+from ocr import ocr_core
 
+
+# define a folder to store and later serve the images
+UPLOAD_FOLDER = join(dirname(realpath(__file__)), 'app/static/uploads/')
+
+# allow files of a specific type
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
+# function to check the file extension
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title = "Home", posts=posts)
+    return render_template('index.html', title = "Home")
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -38,9 +43,6 @@ def login():
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('login.html', title='Sign in', form=form)
-
-
-
     form = LoginForm()
     if form.validate_on_submit():
         flash('Login requested for user {}, remember_me = {}'.format(
@@ -53,8 +55,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/register')
+@app.route('/register', methods = ['GET', 'POST'])
 def register():
+    print("HELLO")
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegForm()
@@ -66,3 +69,42 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('reg.html', title='Register', form=form)
+@app.route('/upload', methods=['GET', 'POST'])
+@login_required
+def upload():
+    if request.method == 'POST':
+    # check if there is a file in the request
+        if 'file' not in request.files:
+            return render_template('upload.html', msg='No file selected', title='Upload')
+        file = request.files['file']
+        # if no file is selected
+        if file.filename == '':
+            return render_template('upload.html', msg='No file selected', title='Upload')
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            option = request.form['options']
+            lang = request.form.getlist('lang')
+            # call the OCR function on it
+            extracted_text = (ocr_core(file.filename, option, lang).split('\n'))
+            # extract the text and display it
+            return render_template('upload.html',
+                                    msg='Successfully processed',
+                                    extracted_text=extracted_text,
+                                    img_src=filename,
+                                    option=option,
+                                    file=file.filename,
+                                    lang=lang)
+    elif request.method == 'GET':
+        return render_template('upload.html', title='Upload')
+
+@app.route('/save_image', methods=['POST'])
+@login_required
+def save_image():
+	img = Posts(image_file=request.form['image_path'], body=request.form['txtArea'])
+	db.session.add(img)
+	db.session.commit()
+
+	# print(Image.query.all())
+	return render_template('index.html', images=Posts.query.all(), title='Home')

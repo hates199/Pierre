@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <div class="row">
+    <div class="col-4">
+        <h1>Upload new File</h1>
+        <h2>{{ option }}
+        {{file}}
+        {{lang}}
+        </h2>
+        <form method="POST" enctype="multipart/form-data">
+        <input type=file name=file> <br>
+        <input type="radio" name="options" id="options" value="threshold" checked> Threshold<br>
+        <input type="radio" name="options" id="options" value="blur"> Blur<br>
+        <br><br>
+        <input type="checkbox" name="lang" id="lang_eng" value="eng" checked> English<br>
+        <input type="checkbox" name="lang" id="lang_mon" value="mon"> Mongolia<br>
+        <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="col-4">
+        {% if img_src %}
+
+        <img src="/static/uploads/{{img_src}}" style="max-width: 400px">
+        {% endif %}
+
+        {% if msg %}
+        <h1>{{ msg }}</h1>
+        {% endif %}
+    </div>
+    <div class="col-4">	
+
+
+        {% if extracted_text %}
+        <div class="edit" contenteditable="true">
+        <form action="/save_image" method="post">
+        <input type="hidden" name="image_path" value="/static/uploads/{{img_src}}">
+        ​<textarea name="txtArea" rows="25" cols="40">
+        {% for text in extracted_text %}
+            {{ text }}<br>
+        {% endfor %}
+        </textarea>
+        <input type="submit" />
+        </form>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+</div>
+  
+{% endblock %}

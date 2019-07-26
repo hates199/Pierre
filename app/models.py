@@ -23,14 +23,13 @@ class User(UserMixin, db.Model):
 
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    body = db.Column(db.String(140))
-    # place holder for img
+    body = db.Column(db.String(140), nullable = False, default = '')
+    image_file = db.Column(db.String(20), nullable = False)
     timestamp = db.Column(db.DateTime, index = True, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-
 
 @login.user_loader
 def load_user(id):
