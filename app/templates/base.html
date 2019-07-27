@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='logo/favicon.ico') }}" />
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
     {% if title %}
     <title>{{ title }} | Pierre </title>
     {% else %}
@@ -13,21 +14,35 @@
     {% endif %}
 </head>
 <body>
+    <div class="logo-header">
+        <h1>
+            <a href="{{ url_for('index') }}"
+                ><img src="{{ url_for('static', filename='logo/logo-txt.png') }}" alt="logo">
+            </a>
+        </h1>
+    </div>
     <nav>
-        <div>
-            <h1><a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='logo/logo-txt.png') }}" alt="logo"></a></h1>
-        </div>
         <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('index') }}">Database</a></li>
             {% if current_user.is_anonymous %}
             <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
             <li><a href="{{ url_for('upload') }}">Upload</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('logout') }}" style="float: right">Logout</a></li>
             {% endif %}
-        </ul> 
-        <hr>
+            <li><a href="#">About</a></li>
+        </ul>
     </nav>
+    <!-- <nav class="nav">
+            <a href="{{ url_for('index') }}" class="nav-item">Gallery</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}" class="nav-item" style="float: right">Login</a>
+            {% else %}
+            <a href="{{ url_for('upload') }}" class="nav-item">Upload</a>
+            <a href="{{ url_for('logout') }}" class="nav-item">Logout</a>
+            {% endif %}
+            <a href="#" class="nav-item" active-color="rebeccapurple">About</a>
+    </nav> -->
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul>
@@ -38,7 +53,7 @@
     {% endif %}
     {% endwith %}
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
 </body>
 </html>
