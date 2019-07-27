@@ -22,14 +22,14 @@
     <div class="col-4">
         {% if img_src %}
 
-        <img src="/static/uploads/{{img_src}}" style="max-width: 400px">
+        <img src="/static/uploads/{{img_src}}">
         {% endif %}
 
         {% if msg %}
         <h1>{{ msg }}</h1>
         {% endif %}
     </div>
-    <div class="col-4">	
+    <div>	
 
 
         {% if extracted_text %}

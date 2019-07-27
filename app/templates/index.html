@@ -5,17 +5,17 @@
     <h1>Hi, {{ current_user.username }}</h1>
     {% if images %}
         {% for image in images %}
-        <div style="border-style:solid">
-            <div class="row">
-                <div class="col-4">
-                        <img src="{{image.image_file}}" style="max-width: 400px">
+        <div>
+            <div>
+                <div>
+                    <img src="{{image.image_file}}">
                     </div>
-                    <div class="col-4" style="border-right-style: solid; border-left-style:solid">
+                    <div>
                         {% for text in image.body.split('<br>') %}
                             <p> {{ text }} </p>
                         {% endfor %}
                         </div>
-                    <div class="col-4">
+                    <div>
                         {{ image.timestamp }}
                         <br> edited by 
                         {{ image.author.username }}
