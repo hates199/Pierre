@@ -12,15 +12,17 @@
                     </div>
                     <div class="col-4" style="border-right-style: solid; border-left-style:solid">
                         {% for text in image.body.split('<br>') %}
-                            <p> {{text}} </p>
-                        {% endfor%}
+                            <p> {{ text }} </p>
+                        {% endfor %}
                         </div>
                     <div class="col-4">
-                        {{image.timestamp}}
+                        {{ image.timestamp }}
+                        <br> edited by 
+                        {{ image.author.username }}
                     </div>
                 </div>
             </div>
         {% endfor %}
     {% endif %}
-    
+
 {% endblock %}

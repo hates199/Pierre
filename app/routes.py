@@ -99,8 +99,11 @@ def index():
 @app.route('/save_image', methods=['POST'])
 @login_required
 def save_image():
-	img = Posts(image_file=request.form['image_path'], body=request.form['txtArea'])
-	db.session.add(img)
-	db.session.commit()
-	# print(Image.query.all())
-	return redirect(url_for('index'))
+    u = current_user.get_id()
+    user = User.query.get(u)
+    img = Posts(image_file=request.form['image_path'], body=request.form['txtArea'], author=user)
+
+    db.session.add(img)
+    db.session.commit()
+    # print(Image.query.all())
+    return redirect(url_for('index'))
