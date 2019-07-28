@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "C:\\Users\\elliot\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe",
+    "sqltools.connections": [
+        {
+            "database": ".\\app.db",
+            "dialect": "SQLite",
+            "name": "Pierre"
+        }
+    ]
+}
