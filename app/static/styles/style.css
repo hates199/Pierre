@@ -7,24 +7,6 @@ body {
     height: 100%;
     margin: 0;
 }
-.bg {
-    position: relative;
-    /* overflow: hidden; */
-}
-/* .bg h1 {
-    padding: 200px;
-    position: relative;
-    z-index: 2;
-}  */
-.bg img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
-    opacity: 0.6;
-}
-
 
 .logo-header {
     
@@ -115,6 +97,7 @@ li a:hover {
 }
 
 .right > p {
+    padding-top: 20%;
     text-align: center;
     line-height: 150%;
     vertical-align: middle; 
