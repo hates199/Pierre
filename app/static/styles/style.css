@@ -73,7 +73,12 @@ li a:hover {
 }
 
 .flash-text {
+    padding-top: 5%;
     font-family: 'Rubik', sans-serif;
+    position: absolute;
+    margin: 0;
+    color: #4f46a5;
+
 }
 
 /* LOGIN */
@@ -107,12 +112,12 @@ li a:hover {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 33vh;
 }
 
 .right > p {
+    text-align: center;
+    line-height: 150%;
+    vertical-align: middle; 
     color: white;
     font-family: 'Rubik', sans-serif
 }
@@ -370,4 +375,17 @@ li a:hover {
   }
   .underline {
       color: black;
+  }
+  .lul-text {
+    font-size: 13px;
+  }
+  @media screen and (min-width: 320px) {
+    .lul-text{
+      font-size: calc(13px + 6 *((100vw - 320px) / 680));
+    } 
+  }
+  @media screen and (min-width: 1000px) {
+    .lul-text {
+      font-size: 18px;
+    }
   }

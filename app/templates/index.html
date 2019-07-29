@@ -1,29 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="index-container">
-        <h1 class="title"><span class="underline">Hi, {{ current_user.username }}</span></h1>
-        <div class="container">
-        {% if images %}
-            {% for image in images %}
-            <div>
-                <div>
-                    <div>
-                        <img src="{{image.image_file}}">
-                        </div>
-                        <div>
-                            {% for text in image.body.split('<br>') %}
-                                <p> {{ text }} </p>
-                            {% endfor %}
-                            </div>
-                        <div>
-                            {{ image.timestamp }}
-                            <br> edited by 
-                            {{ image.author.username }}
-                        </div>
-                    </div>
+{% if images %}
+    {% for image in images %}
+    <div style="border-style: 2px solid">
+        <div class="row">
+            <div class="col-4">
+                <img src="{{image.image_file}}" class="img-fluid">
                 </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    </div>
+                <div class="col-4" style="border-right-style: solid; border-left-style:solid">
+                    {% for text in image.body.split('<br>') %}
+                        <p class="lul-text"> {{ text }} </p>
+                    {% endfor %}
+                    </div>
+                <div class="col-4">
+                    <p class="lul-text">
+                        {{ image.timestamp }}
+                        <br> edited by 
+                        {{ image.author.username }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 {% endblock %}

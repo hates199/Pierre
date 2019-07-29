@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    <div>
-    <div>
+<div style="margin-left: 10%; margin-top: 5%;">
+    <div class="row">
+    <div class="col-4">
         <h1>Upload new File</h1>
         <h2>{{ option }}
         {{file}}
@@ -19,24 +19,22 @@
         <input type="submit" value="Submit">
         </form>
     </div>
-    <div class=>
+    <div class="col-4">
         {% if img_src %}
 
-        <img src="/static/uploads/{{img_src}}">
+        <img src="/static/uploads/{{img_src}}" class="img-fluid">
         {% endif %}
 
         {% if msg %}
         <h1>{{ msg }}</h1>
         {% endif %}
     </div>
-    <div>	
-
-
+    <div class="col-4">	
         {% if extracted_text %}
         <div class="edit" contenteditable="true">
         <form action="/save_image" method="post">
         <input type="hidden" name="image_path" value="/static/uploads/{{img_src}}">
-        ​<textarea name="txtArea" rows="25" cols="40">
+        ​<textarea name="txtArea" style="display:inline-block; width: 25em; height: 40em;"> 
         {% for text in extracted_text %}
             {{ text }}<br>
         {% endfor %}

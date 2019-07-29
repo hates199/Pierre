@@ -9,7 +9,7 @@ def ocr_core(filename, option="thresh", sel_lang="eng"):
     """
     # "C:\Users\body\Desktop\flask_tesseract\images\img (1).jpg"
     print(filename)
-    image = cv2.imread("C:\\Users\\body\\Desktop\\Pierre\\app\\static\\uploads\\"+filename)
+    image = cv2.imread("C:\\Users\\Tergel\\Desktop\\Pierre\\app\\static\\uploads\\"+filename)
 
     # print(image)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
