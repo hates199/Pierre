@@ -110,3 +110,6 @@ def save_image():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+@app.route('/edit')
+def edit():
+    return render_template('edit.html', images=Posts.query.all(), title='Edit')

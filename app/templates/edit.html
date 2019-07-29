@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if images %}
+    {% for image in images %}
+    <div style="border-style: 2px solid">
+        <div class="row">
+            <div class="col-4">
+                <img src="{{image.image_file}}" class="img-fluid">
+                </div>
+                <div class="col-4" style="border-right-style: solid; border-left-style:solid">
+                    {% for text in image.body.split('<br>') %}
+                        <p class="lul-text"> {{ text }} </p>
+                    {% endfor %}
+                    </div>
+                <div class="col-4">
+                    <p class="lul-text">
+                        {{ image.timestamp }}
+                        <br> edited by 
+                        {{ image.author.username }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}
